@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 User = get_user_model()
+LENGTH = 40
 
 
 class Group(models.Model):
@@ -25,12 +26,12 @@ class Post(models.Model):
         upload_to='posts/', null=True, blank=True
     )
     group = models.ForeignKey(
-        Group, on_delete=models.CASCADE,
+        Group, on_delete=models.SET_NULL,
         related_name="posts", blank=True, null=True
     )
 
     def __str__(self):
-        return self.text
+        return self.text[:LENGTH]
 
 
 class Comment(models.Model):
@@ -46,4 +47,4 @@ class Comment(models.Model):
     )
 
     def __str__(self):
-        return self.text
+        return self.text[:LENGTH]
